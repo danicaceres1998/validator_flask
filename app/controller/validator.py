@@ -3,7 +3,7 @@ from flask_restful import reqparse, abort, Resource
 from sys import path
 from datetime import datetime
 path.append('./model')
-from model.model import Model
+from app.model.model import Model
 
 parser = reqparse.RequestParser()
 parser.add_argument('task')

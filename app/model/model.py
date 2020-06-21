@@ -16,7 +16,6 @@ class Directory:
 class Model:
   ''' Abstracion of the model '''
   def save_new_phone(self, phone_number):
-    ''' Returns all the phones '''
     directory = Directory()
     try:
       file = self.__get_file('rb')
@@ -33,6 +32,7 @@ class Model:
       new_file.close()
 
   def get_all_phones(self):
+    ''' Returns all the phones '''
     try:
       archivo = self.__get_file('rb')
       directory = pickle.load(archivo)
@@ -41,7 +41,7 @@ class Model:
     except IOError:
       return []
 
-  ### Privates Methods ###
+  ### Private Methods ###
 
   def __get_file(self, mode):
     return open(DATA_FILE, mode)

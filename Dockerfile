@@ -8,4 +8,9 @@ COPY . /validator_app
 
 RUN pip3 --no-cache-dir install -r requirements.txt
 
-CMD ["python3", "app/__init__.py"]
+CMD uwsgi --http 127.0.0.1:3031 \
+    --wsgi-file app/__init__.py \
+    --callable app \
+    --processes 4 \
+    --threads 2 \
+    --stats 127.0.0.1:919

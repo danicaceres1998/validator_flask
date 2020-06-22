@@ -1,16 +1,15 @@
-FROM python:3.8.0
-
-RUN pip3 install --upgrade pip
+FROM python:3.4.2
 
 WORKDIR /validator_app
 
-COPY . /validator_app
+RUN mkdir app/
 
-RUN pip3 --no-cache-dir install -r requirements.txt
+COPY app/ /validator_app/app
+COPY proyect-uwsgi.ini /validator_app
 
-CMD uwsgi --http 127.0.0.1:3031 \
-    --wsgi-file app/__init__.py \
-    --callable app \
-    --processes 4 \
-    --threads 2 \
-    --stats 127.0.0.1:919
+RUN python3 -m venv env
+RUN pip install flask 
+RUN pip install flask-restful
+RUN pip install uwsgi
+
+CMD uwsgi --ini proyect-uwsgi.ini

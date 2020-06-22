@@ -16,21 +16,6 @@ class Validator(Resource):
     self.model = Model()
 
   def get(self):
-    ''' Returns all the phones '''
-    # Getting the list of phones
-    try:
-      self.response['phones'] = self.model.get_all_phones()
-      self.response['status'] = 200
-      self.response['error'] = False
-    except Exception as e:
-      self.response['status'] = 500
-      self.response['error'] = True
-      self.response['messages'] = str(e) + '. Please try again.'
-      self.model.create_directory()
-    # Returning the response
-    return jsonify(self.response)
-
-  def post(self):
     ''' Checks the sended phone number '''
     # Arguments
     args = parser.parse_args()
@@ -64,7 +49,7 @@ class Validator(Resource):
         self.response['new_contact'] = False
     except Exception:
       # Restarting the method
-      self.post()
+      self.get()
     else: 
       return jsonify(self.response)
 

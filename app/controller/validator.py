@@ -46,7 +46,7 @@ class Validator(Resource):
     try:
       self.__init_register(datetime.now())
       self.response['messages'].append('SUCCESS -> The Directory started successfully')
-    except Exception as e:
+    except Exception:
       self.model.create_directory()
       self.response['messages'].append('ERROR -> The Directory was created currently')
     # Searching the number

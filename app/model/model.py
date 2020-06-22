@@ -3,6 +3,8 @@ from os import system
 from datetime import datetime
 
 DATA_FILE = 'app/data/data.pickle'
+READ_MODE = 'rb'
+WRITE_MODE = 'wb'
 
 class Directory:
   def __init__(self):
@@ -17,11 +19,11 @@ class Model:
   ''' Abstracion of the model '''
   def save_new_phone(self, phone_number):
     try:
-      file = self.__get_file('rb')
+      file = self.__get_file(READ_MODE)
       directory = pickle.load(file)
       file.close()
       directory.list_of_phones.append(phone_number)
-      new_file = self.__get_file('wb')
+      new_file = self.__get_file(WRITE_MODE)
       pickle.dump(directory, new_file)
       new_file.close()
     except:
@@ -30,7 +32,7 @@ class Model:
   def get_all_phones(self):
     ''' Returns all the phones '''
     try:
-      file = self.__get_file('rb')
+      file = self.__get_file(READ_MODE)
       directory = pickle.load(file)
       file.close()
       return directory.list_of_phones
@@ -39,7 +41,7 @@ class Model:
 
   def get_date_directory(self):
     try:
-      file = self.__get_file('rb')
+      file = self.__get_file(READ_MODE)
       directory = pickle.load(file)
       file.close()
       return directory.date
@@ -48,23 +50,23 @@ class Model:
 
   def create_directory(self):
     directory = Directory()
-    file = self.__get_file('wb')
+    file = self.__get_file(WRITE_MODE)
     pickle.dump(directory, file)
     file.close()
 
   def restart_directory(self):
-    # try:
+    try:
       # Getting the current directory
-      file = self.__get_file('rb')
+      file = self.__get_file(READ_MODE)
       directory = pickle.load(file)
       file.close()
       # Restarting the directory
       directory.restart_directory()
-      file = self.__get_file('rb')
+      file = self.__get_file(READ_MODE)
       pickle.dump(directory, DATA_FILE)
       file.close()
-    # except:
-    #   raise Exception('The directory object doesn\'t exist')
+    except:
+      raise Exception('The directory object doesn\'t exist')
 
   ### Private Methods ###
 

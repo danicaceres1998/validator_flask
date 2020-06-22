@@ -16,7 +16,6 @@ class Directory:
 class Model:
   ''' Abstracion of the model '''
   def save_new_phone(self, phone_number):
-    directory = Directory()
     try:
       file = self.__get_file('rb')
       directory = pickle.load(file)
@@ -25,21 +24,47 @@ class Model:
       new_file = self.__get_file('wb')
       pickle.dump(directory, new_file)
       new_file.close()
-    except EOFError:
-      new_file = self.__get_file('wb')
-      directory.list_of_phones.append(phone_number)
-      pickle.dump(directory, new_file)
-      new_file.close()
+    except:
+      raise Exception('The Directory doesn\'t exist')
 
   def get_all_phones(self):
     ''' Returns all the phones '''
     try:
-      archivo = self.__get_file('rb')
-      directory = pickle.load(archivo)
-      archivo.close()
+      file = self.__get_file('rb')
+      directory = pickle.load(file)
+      file.close()
       return directory.list_of_phones
-    except IOError:
-      return []
+    except:
+      raise Exception('The Directory doesn\'t exist')
+
+  def get_date_directory(self):
+    try:
+      file = self.__get_file('rb')
+      directory = pickle.load(file)
+      file.close()
+      return directory.date
+    except:
+      raise 
+
+  def create_directory(self):
+    directory = Directory()
+    file = self.__get_file('wb')
+    pickle.dump(directory, file)
+    file.close()
+
+  def restart_directory(self):
+    # try:
+      # Getting the current directory
+      file = self.__get_file('rb')
+      directory = pickle.load(file)
+      file.close()
+      # Restarting the directory
+      directory.restart_directory()
+      file = self.__get_file('rb')
+      pickle.dump(directory, DATA_FILE)
+      file.close()
+    # except:
+    #   raise Exception('The directory object doesn\'t exist')
 
   ### Private Methods ###
 

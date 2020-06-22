@@ -1,3 +1,3 @@
 # FLASK API Validator
 
-Validor of cellphone numbers
+Validator of cellphone numbers

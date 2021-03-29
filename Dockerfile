@@ -1,15 +1,12 @@
-FROM python:3.4.2
+FROM python:3.6.13-buster
 
-WORKDIR /validator_app
-
-RUN mkdir app/
-
-COPY app/ /validator_app/app
-COPY proyect-uwsgi.ini /validator_app
-
-RUN python3 -m venv env
-RUN pip install flask 
-RUN pip install flask-restful
-RUN pip install uwsgi
+# Libs and Config
+RUN apt-get update -qq && apt-get install -y sqlite3 vim
+WORKDIR /usr/src/app
+COPY requirements.txt ./
+RUN pip3 install --no-cache-dir -r requirements.txt
+# API Code
+COPY . .
+RUN python3 dbconfiguration.py
 
 CMD uwsgi --ini proyect-uwsgi.ini

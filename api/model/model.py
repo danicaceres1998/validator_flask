@@ -4,10 +4,10 @@ from os import system
 from datetime import datetime
 from contextlib import closing
 
-DATA_FILE        = 'api/data/data.pickle'
-DB_FILE          = 'api/data/directory.db'
-READ_MODE        = 'rb'
-WRITE_MODE       = 'wb'
+DATA_FILE   = 'api/data/data.pickle'
+DB_FILE     = 'api/data/directory.db'
+READ_MODE   = 'rb'
+WRITE_MODE  = 'wb'
 
 class Directory:
     def __init__(self):

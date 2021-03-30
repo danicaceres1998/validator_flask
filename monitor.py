@@ -22,6 +22,8 @@ class ProcessesDownException(Exception):
 
 class Monitor:    
     MONTHS_DIFF = 1
+    INFO_STATUS = 'INFO'
+    ERROR_STATUS = 'ERROR'
     MONTHS_QUANTITY = 12
     MIN_QUANT_PROCESSES = 10
     COMMAND = 'pgrep -f uwsgi'
@@ -38,15 +40,15 @@ class Monitor:
             self.__update_directory(directory)
             system(self.DELETE_LOGS)
             system(self.CREATE_LOGS)
-            self.__log_status('Se reiniciaron los logs')
+            self.__log_status('Se reiniciaron los logs', False)
         # Validating the uWSGI Processes
-        processes = popen(self.COMMAND).read()
-        processes = list(ps for ps in processes.split("\n") if ps != '')
-        processes = len(processes)
-        message = "Processes: min_expected=%d, running=%d)" %(self.MIN_QUANT_PROCESSES, processes)
+        processes = len(list(ps for ps in popen(self.COMMAND).read().split("\n") if ps != ''))
+        message = "Processes: min_expected=%d, running=%d" %(self.MIN_QUANT_PROCESSES, processes)
+        error = False
         if processes < self.MIN_QUANT_PROCESSES:
+            error = True
             sentry_sdk.capture_exception(ProcessesDownException(message))
-        self.__log_status(message)
+        self.__log_status(message, error)
 
     ### Private Methods ###
 
@@ -61,8 +63,12 @@ class Monitor:
         pickle.dump(directory, file)
         file.close()
     
-    def __log_status(self, message):
-        log_message = "[INFO %s] -> %s" %(time.strftime('%X'), message)
+    def __log_status(self, message, is_error):
+        if is_error:
+            status = self.ERROR_STATUS
+        else:
+            status = self.INFO_STATUS
+        log_message = "[%s %s] -> %s" %(status, time.strftime('%X'), message)
         system("echo '%s' >> %s" %(log_message, LOG_FILE))
 
 

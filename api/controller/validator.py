@@ -5,15 +5,10 @@ from datetime import datetime
 from os import environ
 path.append('./api')
 from api.model.model import Model
-import sentry_sdk
+from sentry_sdk import capture_exception
 
 parser = reqparse.RequestParser()
 parser.add_argument('phone')
-SAMPLE_RATE = 1.0
-sentry_sdk.init(
-    environ['SENTRY_KEY'],
-    traces_sample_rate=SAMPLE_RATE,
-)
 
 class Validator(Resource):
     ''' Abstraction of a Validator '''
@@ -56,7 +51,7 @@ class Validator(Resource):
             self.response['status'] = 400
             self.response['error'] = True
             self.response['messages'].append(str(e))
-            sentry_sdk.capture_exception(e)
+            capture_exception(e)
         return make_response(jsonify(self.response), self.response['status'])
 
     ### Privates Methods ###

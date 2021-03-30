@@ -1,5 +1,6 @@
 import sqlite3
 import pickle
+from os import system
 from contextlib import closing
 from api.model.model import Directory
 
@@ -21,3 +22,5 @@ if __name__ == '__main__':
     file = open(DATA_FILE, WRITE_MODE)
     pickle.dump(directory, file)
     file.close()
+    # Log Configuration
+    system('touch api/logs/api.log && touch api/logs/monitor.log')

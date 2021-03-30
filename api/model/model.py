@@ -12,9 +12,13 @@ WRITE_MODE  = 'wb'
 class Directory:
     def __init__(self):
         self.date = datetime.now()
+        self.log_date = datetime.now()
 
     def restart_directory(self):
         self.date = datetime.now()
+
+    def restart_log_date(self):
+        self.log_date = datetime.now()
 
 class Model:
     ''' Abstracion of the model '''

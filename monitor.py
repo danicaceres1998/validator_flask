@@ -5,7 +5,7 @@ from datetime import datetime
 from os import popen, environ, system
 from api.model.model import Directory
 
-SAMPLE_RATE = 1.0
+SAMPLE_RATE = 0.1
 DATA_FILE   = 'api/data/data.pickle'
 LOG_FILE    = 'api/logs/monitor.log'
 READ_MODE   = 'rb'

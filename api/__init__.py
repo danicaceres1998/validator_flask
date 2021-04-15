@@ -5,7 +5,7 @@ from flask_restful import Api
 from api.controller.validator import Validator
 from sentry_sdk.integrations.flask import FlaskIntegration
 
-SAMPLE_RATE = 0.6
+SAMPLE_RATE = 0.1
 sentry_sdk.init(
     environ['SENTRY_KEY'],
     integrations=[FlaskIntegration()],

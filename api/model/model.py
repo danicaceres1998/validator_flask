@@ -23,8 +23,8 @@ class Directory:
 class Model:
     ''' Abstracion of the model '''
     DIRECTORY_ERROR = "The Directory doesn't exist"
-    SEARCH_QUERY    = "SELECT phone FROM directory WHERE phone = \"%s\""
-    INSERT_STMT     = "INSERT INTO directory VALUES (\"%s\")"
+    SEARCH_QUERY    = "SELECT phone FROM directory WHERE phone = '%s'"
+    INSERT_STMT     = "INSERT INTO directory VALUES ('%s')"
     DELETE_STMT     = "DELETE FROM directory"
 
     def get_date_directory(self):

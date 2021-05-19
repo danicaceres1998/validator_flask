@@ -25,7 +25,7 @@ class Model:
     DIRECTORY_ERROR = "The Directory doesn't exist"
     SEARCH_QUERY    = "SELECT phone FROM directory WHERE phone = \"%s\""
     INSERT_STMT     = "INSERT INTO directory VALUES (\"%s\")"
-    DELETE_STMT     = "DELETE FROM directory;"
+    DELETE_STMT     = "DELETE FROM directory"
 
     def get_date_directory(self):
         try:
@@ -36,7 +36,7 @@ class Model:
     def restart_directory(self):
         try:
             # Getting the current directory
-            directory = __get_directory()
+            directory = self.__get_directory()
             # Restarting the directory
             directory.restart_directory()
             self.__execute_sql_stmt(self.DELETE_STMT, False)

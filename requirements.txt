@@ -1,5 +1,5 @@
 # REST API
-Flask            ==  1.1.2
+Flask            == 2.3.2
 Flask-RESTful    ==  0.3.8
 uWSGI            ==  2.0.19.1
 # Sentry
